@@ -18,6 +18,24 @@ public class SecondActivity extends AppCompatActivity {
     private Button btnLC;
     private Button btnNo;
     private Button btnLen;
+
+    public static int count_Words(String str)     //https://www.w3resource.com/java-exercises/method/java-method-exercise-5.php
+    {
+        int count = 0;
+        if (!(" ".equals(str.substring(0, 1))) || !(" ".equals(str.substring(str.length() - 1))))
+        {
+            for (int i = 0; i < str.length(); i++)
+            {
+                if (str.charAt(i) == ' ')
+                {
+                    count++;
+                }
+            }
+            count = count + 1;
+        }
+        return count; // returns 0 if string starts or ends with space " ".
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +48,7 @@ public class SecondActivity extends AppCompatActivity {
 
         txtView = findViewById(R.id.textView1);
         Intent rInt =getIntent();
-        String a = rInt.getStringExtra("text");
+        final String a = rInt.getStringExtra("text");
         txtView.setTextColor(getResources().getColor(R.color.colorRed));
         txtView.setTextSize(20);
         txtView.setText("Welcome, " + a);
@@ -45,11 +63,13 @@ public class SecondActivity extends AppCompatActivity {
                 AlertDialog.Builder alert = new AlertDialog.Builder(SecondActivity.this);
                 alert.setCancelable(false);
                 alert.setTitle("Are you sure you want to send data back?");
-                alert.setMessage("Upper Case");
+                alert.setMessage("Upper Cased : "+a);
                 alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        Intent sint2 = new Intent(SecondActivity.this, MainActivity.class);
+                        sint2.putExtra("text", "Upper Case : " +a.toUpperCase());
+                        startActivity(sint2);
                         dialog.dismiss();
                     }
                 });
@@ -69,10 +89,13 @@ public class SecondActivity extends AppCompatActivity {
                 AlertDialog.Builder alert = new AlertDialog.Builder(SecondActivity.this);
                 alert.setCancelable(false);
                 alert.setTitle("Are you sure you want to send data back?");
-                alert.setMessage("Lower Case");
+                alert.setMessage("Lower Cased : "+a);
                 alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Intent sint2 = new Intent(SecondActivity.this, MainActivity.class);
+                        sint2.putExtra("text", "Lower Case : "+ a.toLowerCase());
+                        startActivity(sint2);
                         dialog.dismiss();
                     }
                 });
@@ -92,10 +115,13 @@ public class SecondActivity extends AppCompatActivity {
                 AlertDialog.Builder alert = new AlertDialog.Builder(SecondActivity.this);
                 alert.setCancelable(false);
                 alert.setTitle("Are you sure you want to send data back?");
-                alert.setMessage("Number of Words");
+                alert.setMessage("Number of Words : ");
                 alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Intent sint2 = new Intent(SecondActivity.this, MainActivity.class);
+                        sint2.putExtra("text", "Number of words : "+count_Words(a));
+                    startActivity(sint2);
                         dialog.dismiss();
                     }
                 });
@@ -115,10 +141,12 @@ public class SecondActivity extends AppCompatActivity {
                 AlertDialog.Builder alert = new AlertDialog.Builder(SecondActivity.this);
                 alert.setCancelable(false);
                 alert.setTitle("Are you sure you want to send data back?");
-                alert.setMessage("Length");
+                alert.setMessage("Length : "+a);
                 alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int which) {Intent sint2 = new Intent(SecondActivity.this, MainActivity.class);
+                        sint2.putExtra("text", "Length :  "+a.length());
+                        startActivity(sint2);
                         dialog.dismiss();
                     }
                 });
@@ -132,5 +160,7 @@ public class SecondActivity extends AppCompatActivity {
                 aDialog.show();
             }
         });
+
+
     }
 }
